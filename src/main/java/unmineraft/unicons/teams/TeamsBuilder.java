@@ -5,13 +5,30 @@ import net.luckperms.api.model.group.Group;
 import net.luckperms.api.node.types.PrefixNode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import unmineraft.unicons.UNIcons;
 import unmineraft.unicons.utilities.Utilities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 public class TeamsBuilder {
+    public static ArrayList<String> ALL_GROUPS = new ArrayList<>();
+    
+    public static boolean isPlayerHaveTeam(Player player, String group){
+        return player.hasPermission("group." + group);
+    }
+
+    public static boolean isPlayerHaveAnyTeam(Player player){
+        for (String group : TeamsBuilder.ALL_GROUPS){
+            if (TeamsBuilder.isPlayerHaveTeam(player, group)) return true;
+        }
+        return false;
+    }
+
     private String name;
     private String prefix;
     private Group group;
@@ -19,15 +36,9 @@ public class TeamsBuilder {
     private final UNIcons plugin;
     private final LuckPerms luckPerms;
 
+    public final HashMap<UUID, Player> members = new HashMap<>();
+
     // Constructors
-    public TeamsBuilder(UNIcons plugin, String name){
-        this.plugin = plugin;
-        this.luckPerms = plugin.getLuckPermsApi();
-        this.name = name;
-
-        this.createTeam();
-    }
-
     public TeamsBuilder(UNIcons plugin, String name, String prefix){
         this.plugin = plugin;
         this.luckPerms = plugin.getLuckPermsApi();
@@ -36,6 +47,11 @@ public class TeamsBuilder {
 
         this.createTeam();
         this.setTeamPrefix();
+
+        // Add name to control variable
+        if (!this.name.equals("")){
+            TeamsBuilder.ALL_GROUPS.add(this.name);
+        }
     }
 
     // Private Methods
