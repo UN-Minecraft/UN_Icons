@@ -2,6 +2,7 @@ package unmineraft.unicons.teams;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
+import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.types.PrefixNode;
 import org.bukkit.Bukkit;
 import org.bukkit.command.ConsoleCommandSender;
@@ -17,16 +18,20 @@ import java.util.concurrent.CompletionException;
 
 public class TeamsBuilder {
     public static ArrayList<String> ALL_GROUPS = new ArrayList<>();
+
+    public static HashMap<String, String> PREFIX_GROUPS = new HashMap<>();
+
+    public static HashMap<UUID, String> PLAYER_TEAM = new HashMap<>();
     
     public static boolean isPlayerHaveTeam(Player player, String group){
         return player.hasPermission("group." + group);
     }
 
-    public static boolean isPlayerHaveAnyTeam(Player player){
+    public static String isPlayerHaveAnyTeam(Player player){
         for (String group : TeamsBuilder.ALL_GROUPS){
-            if (TeamsBuilder.isPlayerHaveTeam(player, group)) return true;
+            if (TeamsBuilder.isPlayerHaveTeam(player, group)) return group;
         }
-        return false;
+        return null;
     }
 
     private String name;
@@ -35,8 +40,6 @@ public class TeamsBuilder {
 
     private final UNIcons plugin;
     private final LuckPerms luckPerms;
-
-    public final HashMap<UUID, Player> members = new HashMap<>();
 
     // Constructors
     public TeamsBuilder(UNIcons plugin, String name, String prefix){
@@ -51,6 +54,10 @@ public class TeamsBuilder {
         // Add name to control variable
         if (!this.name.equals("")){
             TeamsBuilder.ALL_GROUPS.add(this.name);
+        }
+
+        if (!this.prefix.equals("")){
+            TeamsBuilder.PREFIX_GROUPS.put(this.name, this.prefix);
         }
     }
 
@@ -109,6 +116,21 @@ public class TeamsBuilder {
         });
     }
 
+    private void addPlayer(Player player){
+        if (this.name == null) return;
+
+        Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+            UUID playerUUID = player.getUniqueId();
+            User user = luckPerms.getUserManager().getUser(playerUUID);
+
+            if (user == null) return;
+
+            user.setPrimaryGroup(this.name);
+
+            luckPerms.getUserManager().saveUser(user);
+        });
+    }
+
     // Public Methods
     public String getName(){
         if (this.name != null) return this.name;
@@ -133,5 +155,17 @@ public class TeamsBuilder {
             return true;
         }
         return false;
+    }
+
+    public boolean isMember(Player player){
+        UUID playerId = player.getUniqueId();
+        if (!TeamsBuilder.PLAYER_TEAM.containsKey(playerId)) return false;
+
+        return TeamsBuilder.PLAYER_TEAM.get(playerId).equals(this.name);
+    }
+
+    public void add(Player player){
+        this.addPlayer(player);
+        TeamsBuilder.PLAYER_TEAM.put(player.getUniqueId(), this.name);
     }
 }
