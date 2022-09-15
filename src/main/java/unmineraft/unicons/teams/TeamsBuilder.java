@@ -200,7 +200,7 @@ public class TeamsBuilder {
 
     public void addPermissions(List<String> permissions){
         for (String permission : permissions){
-            this.addSuffix(permission);
+            this.addPermission(permission);
         }
     }
 }

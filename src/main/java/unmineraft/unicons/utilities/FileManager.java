@@ -13,6 +13,7 @@ public class FileManager {
     private final FileConfiguration config;
     private final ArrayList<String> pathSections = new ArrayList<>();
     private HashMap<String, File> fileReference = new HashMap<>();
+    private HashMap<String, FileConfiguration> externalConfig = new HashMap<>();
 
     protected UNIcons plugin;
     protected Path pluginsFolder;
@@ -21,6 +22,8 @@ public class FileManager {
         this.plugin = plugin;
         this.config = plugin.getConfig();
         this.pluginsFolder = plugin.getDataFolder().toPath().getParent().toAbsolutePath();
+
+        this.getExternalFiles(); // Search Files
     }
 
     private String getFileSeparator(){
@@ -36,7 +39,7 @@ public class FileManager {
         this.pathSections.addAll(sections.getKeys(false));
     }
 
-    private void getExternalFile(){
+    private void getExternalFiles(){
         this.getPathSections();
 
         String generalPath = "config.path.";
@@ -54,7 +57,7 @@ public class FileManager {
                 File file = new File(configExternalPath);
                 this.fileReference.put(pluginName, file);
             } catch (Exception exception){
-                System.out.println(exception.getMessage());
+                exception.printStackTrace();
                 break;
             }
         }

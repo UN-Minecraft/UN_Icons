@@ -54,19 +54,19 @@ groups:
       tag_prefix: "[ICO_UD]"
       tag_suffix: ""
       sort_priority: 1
-  up:
+  upn:
     general:
       permissions:
         - "blockball.game.join.all"
         - "essentials.chat"
-        - "nte.up"
+        - "nte.upn"
     tab:
-      tab_prefix: "[UP]"
+      tab_prefix: "[UPN]"
       tab_name: "%player%"
       tab_suffix: ""
     scoreboard:
-      work_name: "UP_LOVER"
+      work_name: "UPN_LOVER"
     tag_name:
-      tag_prefix: "[ICO_UP]"
+      tag_prefix: "[ICO_UPN]"
       tag_suffix: ""
       sort_priority: 1

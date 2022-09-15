@@ -65,11 +65,9 @@ public final class UNIcons extends JavaPlugin {
         this.saveDefaultConfig();
         this.configRegister();
 
-        // Inicializate File Manager
-        FileManager fileManager = new FileManager(this);
-
-        // Inicializate TeamsConsumer
+        // Inicializate TeamsConsumer (This build the teams from config file)
         TeamsConfigConsumer teamsConfigConsumer = new TeamsConfigConsumer(this);
+        teamsConfigConsumer.buildAllTeams(teamsConfigConsumer.groupsSection);
     }
 
     @Override

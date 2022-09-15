@@ -12,7 +12,7 @@ import java.util.List;
 public class TeamsConfigConsumer {
     private final UNIcons plugin;
     private final FileConfiguration config;
-    private ArrayList<String> groupsSection;
+    public ArrayList<String> groupsSection;
 
     public TeamsConfigConsumer(UNIcons plugin){
         this.plugin = plugin;
@@ -31,7 +31,7 @@ public class TeamsConfigConsumer {
         return teamsSection;
     }
 
-    protected TeamsBuilder buildTeam(String groupSectionName){
+    public TeamsBuilder buildTeam(String groupSectionName){
         TeamsBuilder team = new TeamsBuilder(this.plugin, groupSectionName);
 
         String pathGroup = "groups." + groupSectionName + ".";
@@ -59,7 +59,7 @@ public class TeamsConfigConsumer {
         return team;
     }
 
-    protected void buildAllTeams(ArrayList<String> groupsSections){
+    public void buildAllTeams(ArrayList<String> groupsSections){
         for (String groupName : groupsSections){
             TeamsBuilder team = this.buildTeam(groupName);
             if (TeamsBuilder.teams.containsKey(groupName)) continue;
