@@ -14,6 +14,7 @@ import unmineraft.unicons.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -22,6 +23,8 @@ public class TeamsBuilder {
     public static ArrayList<String> ALL_GROUPS = new ArrayList<>();
 
     public static HashMap<UUID, String> PLAYER_TEAM = new HashMap<>();
+
+    public static HashMap<String, TeamsBuilder> teams = new HashMap<>();
     
     public static boolean isPlayerHaveTeam(Player player, String group){
         return player.hasPermission("group." + group);
@@ -195,7 +198,7 @@ public class TeamsBuilder {
         this.setTeamPermission(permission);
     }
 
-    public void addPermissions(String[] permissions){
+    public void addPermissions(List<String> permissions){
         for (String permission : permissions){
             this.addSuffix(permission);
         }

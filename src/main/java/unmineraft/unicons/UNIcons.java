@@ -8,11 +8,11 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import unmineraft.unicons.events.SelectTeamEvent;
+import unmineraft.unicons.teams.TeamsConfigConsumer;
 import unmineraft.unicons.utilities.FileManager;
 import unmineraft.unicons.utilities.Utilities;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public final class UNIcons extends JavaPlugin {
     PluginDescriptionFile pdfile = this.getDescription();
@@ -58,15 +58,18 @@ public final class UNIcons extends JavaPlugin {
 
         if (this.api == null) return;
 
-        // Inicializate File Manager
-        FileManager fileManager = new FileManager(this);
-
         // Manage Events
         this.eventsRegister();
 
         // Config File Management
         this.saveDefaultConfig();
         this.configRegister();
+
+        // Inicializate File Manager
+        FileManager fileManager = new FileManager(this);
+
+        // Inicializate TeamsConsumer
+        TeamsConfigConsumer teamsConfigConsumer = new TeamsConfigConsumer(this);
     }
 
     @Override

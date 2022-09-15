@@ -1,0 +1,40 @@
+config:
+  path:
+    NameTagEdit: "/NametagEdit/groups.yml"
+    TabList: "/TabList/groups.yml"
+  separator: "########## UNICONS_MANAGEMENT ##########"
+groups:
+  un:
+    general:
+      permissions: # Added
+        - "blockball.game.join.all"
+        - "essentials.chat"
+        - "nte.un"
+    tab:
+      # tl
+      tab_prefix: "[UN]"
+      tab_name: "%player%"
+      tab_suffix: ""
+    scoreboard: # Added
+      work_name: "UN_LOVER"
+    tag_name:
+      # nte.PERMISSION_GROUP
+      tag_prefix: "[ICO_UN]"
+      tag_suffix: ""
+      sort_priority: 1
+  uptc:
+    general:
+      permissions:
+        - "blockball.game.join.all"
+        - "essentials.chat"
+        - "nte.uptc"
+    tab:
+      tab_prefix: "[UPTC]"
+      tab_name: "%player%"
+      tab_suffix: ""
+    scoreboard:
+      work_name: "UPTC_LOVER"
+    tag_name:
+      tag_prefix: "[ICO_UPTC]"
+      tag_suffix: ""
+      sort_priority: 1
