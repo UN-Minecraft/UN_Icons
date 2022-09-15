@@ -1,4 +1,4 @@
-# config:
+config:
   path:
     #NameTagEdit: "/NametagEdit/groups.yml"
     #TabList: "/TabList/groups.yml"
