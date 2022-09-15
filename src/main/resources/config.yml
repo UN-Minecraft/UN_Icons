@@ -1,8 +1,8 @@
-config:
+# config:
   path:
-    NameTagEdit: "/NametagEdit/groups.yml"
-    TabList: "/TabList/groups.yml"
-  separator: "########## UNICONS_MANAGEMENT_%LOCATION% ##########"
+    #NameTagEdit: "/NametagEdit/groups.yml"
+    #TabList: "/TabList/groups.yml"
+  #separator: "########## UNICONS_MANAGEMENT_%LOCATION% ##########"
 groups:
   un:
     general:
@@ -10,63 +10,63 @@ groups:
         - "blockball.game.join.all"
         - "essentials.chat"
         - "nte.un"
-    tab:
+    #tab:
       # tl
-      tab_prefix: "[UN]"
-      tab_name: "%player%"
-      tab_suffix: ""
+    #  tab_prefix: "[UN]"
+    #  tab_name: "%player%"
+    #  tab_suffix: ""
     scoreboard: # Added
       work_name: "UN_LOVER"
-    tag_name:
+    #tag_name:
       # nte.PERMISSION_GROUP
-      tag_prefix: "[ICO_UN]"
-      tag_suffix: ""
-      sort_priority: 1
+    #  tag_prefix: "[ICO_UN]"
+    #  tag_suffix: ""
+    #  sort_priority: 1
   uptc:
     general:
       permissions:
         - "blockball.game.join.all"
         - "essentials.chat"
         - "nte.uptc"
-    tab:
-      tab_prefix: "[UPTC]"
-      tab_name: "%player%"
-      tab_suffix: ""
+    # tab:
+      # tab_prefix: "[UPTC]"
+      # tab_name: "%player%"
+      # tab_suffix: ""
     scoreboard:
       work_name: "UPTC_LOVER"
-    tag_name:
-      tag_prefix: "[ICO_UPTC]"
-      tag_suffix: ""
-      sort_priority: 1
+    # tag_name:
+      # tag_prefix: "[ICO_UPTC]"
+      # tag_suffix: ""
+      # sort_priority: 1
   ud:
     general:
       permissions:
         - "blockball.game.join.all"
         - "essentials.chat"
         - "nte.ud"
-    tab:
-      tab_prefix: "[UD]"
-      tab_name: "%player%"
-      tab_suffix: ""
+    # tab:
+      # tab_prefix: "[UD]"
+      # tab_name: "%player%"
+      # tab_suffix: ""
     scoreboard:
       work_name: "UD_LOVER"
-    tag_name:
-      tag_prefix: "[ICO_UD]"
-      tag_suffix: ""
-      sort_priority: 1
+    # tag_name:
+      # tag_prefix: "[ICO_UD]"
+      # tag_suffix: ""
+      # sort_priority: 1
   upn:
     general:
       permissions:
         - "blockball.game.join.all"
         - "essentials.chat"
         - "nte.upn"
-    tab:
-      tab_prefix: "[UPN]"
-      tab_name: "%player%"
-      tab_suffix: ""
+    # tab:
+      # tab_prefix: "[UPN]"
+      # tab_name: "%player%"
+      # tab_suffix: ""
     scoreboard:
       work_name: "UPN_LOVER"
-    tag_name:
-      tag_prefix: "[ICO_UPN]"
-      tag_suffix: ""
-      sort_priority: 1
+    # tag_name:
+      # tag_prefix: "[ICO_UPN]"
+      # tag_suffix: ""
+      # sort_priority: 1
