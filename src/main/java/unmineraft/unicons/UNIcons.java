@@ -7,6 +7,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import unmineraft.unicons.events.FriendlyFireEvent;
 import unmineraft.unicons.events.SelectTeamEvent;
 import unmineraft.unicons.teams.TeamsConfigConsumer;
 import unmineraft.unicons.utilities.FileManager;
@@ -29,6 +30,7 @@ public final class UNIcons extends JavaPlugin {
     public void eventsRegister(){
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new SelectTeamEvent(this), this);
+        pluginManager.registerEvents(new FriendlyFireEvent(this), this);
     }
 
     public void configRegister(){

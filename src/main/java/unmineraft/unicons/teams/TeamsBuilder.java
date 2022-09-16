@@ -185,6 +185,9 @@ public class TeamsBuilder {
     }
 
     public void addMember(Player player){
+        // To avoid overwriting groups
+        if (TeamsBuilder.PLAYER_TEAM.containsKey(player.getUniqueId())) return;
+
         this.addPlayer(player);
         TeamsBuilder.PLAYER_TEAM.put(player.getUniqueId(), this.name);
     }
