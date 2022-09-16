@@ -3,6 +3,7 @@ config:
     #NameTagEdit: "/NametagEdit/groups.yml"
     #TabList: "/TabList/groups.yml"
   #separator: "########## UNICONS_MANAGEMENT_%LOCATION% ##########"
+  friendlyFire: false
 groups:
   un:
     general:
