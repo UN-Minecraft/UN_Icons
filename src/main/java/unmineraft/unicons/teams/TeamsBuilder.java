@@ -1,9 +1,7 @@
 package unmineraft.unicons.teams;
 
 import net.luckperms.api.LuckPerms;
-import net.luckperms.api.model.data.DataMutateResult;
 import net.luckperms.api.model.group.Group;
-import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
 import net.luckperms.api.node.NodeType;
 import net.luckperms.api.node.types.InheritanceNode;
