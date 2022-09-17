@@ -22,15 +22,13 @@ import java.util.concurrent.CompletionException;
 public class TeamsBuilder {
     public static ArrayList<String> ALL_GROUPS = new ArrayList<>();
 
-    public static HashMap<UUID, String> PLAYER_TEAM = new HashMap<>();
-
     public static HashMap<String, TeamsBuilder> teams = new HashMap<>();
     
     public static boolean isPlayerHaveTeam(Player player, String group){
         return player.hasPermission("group." + group);
     }
 
-    public static String isPlayerHaveAnyTeam(Player player){
+    public static String getPlayerTeam(Player player){
         for (String group : TeamsBuilder.ALL_GROUPS){
             if (TeamsBuilder.isPlayerHaveTeam(player, group)) return group;
         }
@@ -178,18 +176,18 @@ public class TeamsBuilder {
     }
 
     public boolean isMember(Player player){
-        UUID playerId = player.getUniqueId();
-        if (!TeamsBuilder.PLAYER_TEAM.containsKey(playerId)) return false;
-
-        return TeamsBuilder.PLAYER_TEAM.get(playerId).equals(this.name);
+        return TeamsBuilder.isPlayerHaveTeam(player, this.name);
     }
 
     public void addMember(Player player){
+        // Is the same team
+        if (this.isMember(player)) return;
+
         // To avoid overwriting groups
-        if (TeamsBuilder.PLAYER_TEAM.containsKey(player.getUniqueId())) return;
+        String groupName = TeamsBuilder.getPlayerTeam(player);
+        if (groupName != null) return;
 
         this.addPlayer(player);
-        TeamsBuilder.PLAYER_TEAM.put(player.getUniqueId(), this.name);
     }
 
     public void addSuffix(String suffix){

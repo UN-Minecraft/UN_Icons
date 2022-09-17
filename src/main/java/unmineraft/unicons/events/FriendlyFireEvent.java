@@ -7,7 +7,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import unmineraft.unicons.UNIcons;
 import unmineraft.unicons.teams.TeamsBuilder;
 
-import java.util.UUID;
 
 public class FriendlyFireEvent implements Listener {
     private boolean disableFF = false;
@@ -25,18 +24,14 @@ public class FriendlyFireEvent implements Listener {
         Player damager = (Player) event.getDamager();
 
         // Verify Teams
-        UUID targetID = target.getUniqueId();
-        UUID damagerID = damager.getUniqueId();
+        String targetTeamName = TeamsBuilder.getPlayerTeam(target);
+        String damagerTeamName = TeamsBuilder.getPlayerTeam(damager);
 
         // In case the players does not have a team
-        if (!(TeamsBuilder.PLAYER_TEAM.containsKey(targetID))) return;
-        if (!(TeamsBuilder.PLAYER_TEAM.containsKey(damagerID))) return;
+        if (targetTeamName == null ||damagerTeamName == null) return;
 
         // In case the players have different team
-        String targetTeam = TeamsBuilder.PLAYER_TEAM.get(targetID);
-        String damagerTeam = TeamsBuilder.PLAYER_TEAM.get(damagerID);
-
-        if (!(targetTeam.equals(damagerTeam))) return;
+        if (!(targetTeamName.equals(damagerTeamName))) return;
 
         // In case the player have a same team
         event.setCancelled(true);
