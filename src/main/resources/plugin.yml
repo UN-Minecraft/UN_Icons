@@ -5,3 +5,8 @@ api-version: 1.18
 authors: [ ColchasGOD ]
 description: Sistema de equipos
 website: https://github.com/UN-Minecraft/UN_Icons
+
+commands:
+  unico:
+    description: Manejo de equipos
+    permission: group.default

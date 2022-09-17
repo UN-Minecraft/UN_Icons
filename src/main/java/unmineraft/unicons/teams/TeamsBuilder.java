@@ -2,8 +2,9 @@ package unmineraft.unicons.teams;
 
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.group.Group;
-import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.InheritanceNode;
 import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.node.types.SuffixNode;
 import org.bukkit.Bukkit;
@@ -22,15 +23,13 @@ import java.util.concurrent.CompletionException;
 public class TeamsBuilder {
     public static ArrayList<String> ALL_GROUPS = new ArrayList<>();
 
-    public static HashMap<UUID, String> PLAYER_TEAM = new HashMap<>();
-
     public static HashMap<String, TeamsBuilder> teams = new HashMap<>();
     
     public static boolean isPlayerHaveTeam(Player player, String group){
         return player.hasPermission("group." + group);
     }
 
-    public static String isPlayerHaveAnyTeam(Player player){
+    public static String getPlayerTeam(Player player){
         for (String group : TeamsBuilder.ALL_GROUPS){
             if (TeamsBuilder.isPlayerHaveTeam(player, group)) return group;
         }
@@ -137,17 +136,14 @@ public class TeamsBuilder {
     }
 
     private void addPlayer(Player player){
-        if (this.name == null) return;
-
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
             UUID playerUUID = player.getUniqueId();
-            User user = luckPerms.getUserManager().getUser(playerUUID);
+            this.luckPerms.getUserManager().modifyUser(playerUUID, user -> {
+               InheritanceNode node = InheritanceNode.builder(this.group.getName()).value(true).build();
 
-            if (user == null) return;
-
-            user.setPrimaryGroup(this.name);
-
-            luckPerms.getUserManager().saveUser(user);
+               user.data().clear(NodeType.INHERITANCE::matches);
+               user.data().add(node);
+            });
         });
     }
 
@@ -178,18 +174,11 @@ public class TeamsBuilder {
     }
 
     public boolean isMember(Player player){
-        UUID playerId = player.getUniqueId();
-        if (!TeamsBuilder.PLAYER_TEAM.containsKey(playerId)) return false;
-
-        return TeamsBuilder.PLAYER_TEAM.get(playerId).equals(this.name);
+        return TeamsBuilder.isPlayerHaveTeam(player, this.name);
     }
 
     public void addMember(Player player){
-        // To avoid overwriting groups
-        if (TeamsBuilder.PLAYER_TEAM.containsKey(player.getUniqueId())) return;
-
         this.addPlayer(player);
-        TeamsBuilder.PLAYER_TEAM.put(player.getUniqueId(), this.name);
     }
 
     public void addSuffix(String suffix){
