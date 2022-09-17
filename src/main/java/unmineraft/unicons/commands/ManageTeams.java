@@ -17,52 +17,42 @@ public class ManageTeams implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
-        String errorMessage;
+        String playerMessage;
         if (!(sender instanceof Player)){
-            errorMessage = Utilities.translateColor("&cNo puedes ejecutar comandos desde la consola");
-            sender.sendMessage(this.plugin.name + errorMessage);
+            playerMessage = Utilities.translateColor("&cNo puedes ejecutar comandos desde la consola");
+            sender.sendMessage(this.plugin.name + playerMessage);
             return false;
         }
 
         Player player = (Player) sender;
 
-        // Team
-        if (args[0].equalsIgnoreCase("team")){
-            // Set
-            if (args[1].equalsIgnoreCase("set")){
-                String teamName = args[2];
+        String message = args[0] + " " + args[1];
 
-                if (teamName == null || teamName.equals("")){
-                    errorMessage = Utilities.translateColor("&cNo has registrado un equipo");
-                    player.sendMessage(errorMessage);
-                    return false;
-                }
+        if (message.equals("team set")){
+            if (args.length < 3){
+                playerMessage = Utilities.translateColor("&cComando incompleto");
+                player.sendMessage(playerMessage);
+                return false;
+            }
+            String teamName = args[2];
 
-                if (!TeamsBuilder.teams.containsKey(teamName)){
-                    errorMessage = Utilities.translateColor("&cEquipo registrado invalido");
-                    player.sendMessage(errorMessage);
-                    return false;
-                }
-
-                // Group
-                TeamsBuilder selectedTeam = TeamsBuilder.teams.get(teamName);
-                boolean isAdded = selectedTeam.addMember(player);
-
-                if (!isAdded){
-                    errorMessage = Utilities.translateColor("&cYa estas en un equipo");
-                    player.sendMessage(errorMessage);
-                    return false;
-                }
-
-                String welcomeMessage = Utilities.translateColor("&aBienvenido al equipo " + selectedTeam.getName());
-                player.sendMessage(welcomeMessage);
-                return true;
+            if (teamName.equals("") || !(TeamsBuilder.teams.containsKey(teamName))){
+                playerMessage = Utilities.translateColor("&cGrupo desconocido");
+                player.sendMessage(playerMessage);
+                return false;
             }
 
-            errorMessage = Utilities.translateColor("&cSelección Invalida");
-            player.sendMessage(errorMessage);
-            return false;
+            TeamsBuilder team = TeamsBuilder.teams.get(teamName);
+
+            team.addMember(player);
+            playerMessage = Utilities.translateColor("&aBienvenido al equipo " + team.getName());
+            player.sendMessage(playerMessage);
+            return true;
+
         }
+
+        playerMessage = Utilities.translateColor("&cComando desconocido");
+        player.sendMessage(playerMessage);
         return false;
     }
 }

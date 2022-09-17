@@ -1,9 +1,12 @@
 package unmineraft.unicons.teams;
 
 import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.data.DataMutateResult;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
+import net.luckperms.api.node.NodeType;
+import net.luckperms.api.node.types.InheritanceNode;
 import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.node.types.SuffixNode;
 import org.bukkit.Bukkit;
@@ -135,17 +138,14 @@ public class TeamsBuilder {
     }
 
     private void addPlayer(Player player){
-        if (this.name == null) return;
-
         Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
             UUID playerUUID = player.getUniqueId();
-            User user = luckPerms.getUserManager().getUser(playerUUID);
+            this.luckPerms.getUserManager().modifyUser(playerUUID, user -> {
+               InheritanceNode node = InheritanceNode.builder(this.group.getName()).value(true).build();
 
-            if (user == null) return;
-
-            user.setPrimaryGroup(this.name);
-
-            luckPerms.getUserManager().saveUser(user);
+               user.data().clear(NodeType.INHERITANCE::matches);
+               user.data().add(node);
+            });
         });
     }
 
@@ -179,16 +179,8 @@ public class TeamsBuilder {
         return TeamsBuilder.isPlayerHaveTeam(player, this.name);
     }
 
-    public boolean addMember(Player player){
-        // Is the same team
-        if (this.isMember(player)) return false;
-
-        // To avoid overwriting groups
-        String groupName = TeamsBuilder.getPlayerTeam(player);
-        if (groupName != null) return false;
-
+    public void addMember(Player player){
         this.addPlayer(player);
-        return true;
     }
 
     public void addSuffix(String suffix){

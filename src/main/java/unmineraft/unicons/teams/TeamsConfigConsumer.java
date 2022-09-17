@@ -6,7 +6,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import unmineraft.unicons.UNIcons;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class TeamsConfigConsumer {
