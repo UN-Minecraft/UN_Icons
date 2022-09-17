@@ -7,6 +7,7 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import unmineraft.unicons.commands.ManageTeams;
 import unmineraft.unicons.events.FriendlyFireEvent;
 import unmineraft.unicons.events.SelectTeamEvent;
 import unmineraft.unicons.teams.TeamsConfigConsumer;
@@ -14,6 +15,7 @@ import unmineraft.unicons.utilities.FileManager;
 import unmineraft.unicons.utilities.Utilities;
 
 import java.io.File;
+import java.util.Objects;
 
 public final class UNIcons extends JavaPlugin {
     PluginDescriptionFile pdfile = this.getDescription();
@@ -41,6 +43,10 @@ public final class UNIcons extends JavaPlugin {
             this.getConfig().options().copyDefaults(true);
             saveConfig();
         }
+    }
+
+    public void commandRegister(){
+        Objects.requireNonNull(this.getCommand("unico")).setExecutor(new ManageTeams(this));
     }
 
     @Override

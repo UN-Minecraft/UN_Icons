@@ -179,15 +179,16 @@ public class TeamsBuilder {
         return TeamsBuilder.isPlayerHaveTeam(player, this.name);
     }
 
-    public void addMember(Player player){
+    public boolean addMember(Player player){
         // Is the same team
-        if (this.isMember(player)) return;
+        if (this.isMember(player)) return false;
 
         // To avoid overwriting groups
         String groupName = TeamsBuilder.getPlayerTeam(player);
-        if (groupName != null) return;
+        if (groupName != null) return false;
 
         this.addPlayer(player);
+        return true;
     }
 
     public void addSuffix(String suffix){
