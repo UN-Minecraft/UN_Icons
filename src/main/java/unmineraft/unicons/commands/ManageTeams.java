@@ -37,7 +37,7 @@ public class ManageTeams implements CommandExecutor {
             String teamName = args[2];
 
             if (teamName.equals("") || !(TeamsBuilder.teams.containsKey(teamName))){
-                playerMessage = Utilities.translateColor("&cGrupo desconocido");
+                playerMessage = Utilities.translateColor("&cGrupo desconocido, registro: " + teamName);
                 player.sendMessage(playerMessage);
                 return false;
             }
@@ -49,6 +49,11 @@ public class ManageTeams implements CommandExecutor {
             player.sendMessage(playerMessage);
             return true;
 
+        }
+
+        if (message.equals("team get")){
+            player.sendMessage("Equipos Almacenados en Teams: " + TeamsBuilder.teams.keySet());
+            player.sendMessage("Equipos Almacenados en ALL_GROUPS: " + TeamsBuilder.ALL_GROUPS);
         }
 
         playerMessage = Utilities.translateColor("&cComando desconocido");

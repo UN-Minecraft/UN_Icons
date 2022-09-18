@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import unmineraft.unicons.UNIcons;
+import unmineraft.unicons.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,10 @@ public class TeamsConfigConsumer {
 
         ConfigurationSection configGroupSection = this.config.getConfigurationSection("groups");
 
-        if (configGroupSection == null) return teamsSection;
+        if (configGroupSection == null) {
+            System.out.println("[UNIcons] ERROR: NO CONFIG LOADED");
+            return teamsSection;
+        }
 
         teamsSection.addAll(configGroupSection.getKeys(false));
         return teamsSection;
@@ -60,9 +64,8 @@ public class TeamsConfigConsumer {
 
     public void buildAllTeams(ArrayList<String> groupsSections){
         for (String groupName : groupsSections){
+            Bukkit.getConsoleSender().sendMessage(this.plugin.name + Utilities.translateColor("&aBuild Team: ") + groupName);
             TeamsBuilder team = this.buildTeam(groupName);
-            if (TeamsBuilder.teams.containsKey(groupName)) continue;
-
             TeamsBuilder.teams.put(groupName, team);
         }
     }
