@@ -54,14 +54,17 @@ public final class UNIcons extends JavaPlugin {
         // Load LuckPerms API
         RegisteredServiceProvider<LuckPerms> provider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
         if (provider == null){
-            Bukkit.getConsoleSender().sendMessage(this.name + Utilities.translateColor("&l&c Error: &rApi LuckPerms not load"));
+            Bukkit.getConsoleSender().sendMessage(this.name + Utilities.translateColor("&l&c Error: &rProvider LuckPerms not load"));
         }
 
         if (provider != null){
             this.api = provider.getProvider();
         }
 
-        if (this.api == null) return;
+        if (this.api == null) {
+            Bukkit.getConsoleSender().sendMessage(this.name + Utilities.translateColor("&l&cError: API NOT LOAD"));
+            return;
+        }
 
         // Manage Events
         this.eventsRegister();
