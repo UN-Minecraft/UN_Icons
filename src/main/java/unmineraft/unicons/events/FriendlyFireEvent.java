@@ -1,5 +1,7 @@
 package unmineraft.unicons.events;
 
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,8 +22,28 @@ public class FriendlyFireEvent implements Listener {
         Player target = (Player) event.getEntity();
 
         // Damager
-        if (!(event.getDamager() instanceof  Player)) return;
-        Player damager = (Player) event.getDamager();
+        Entity entityDamager = event.getDamager();
+        if (!(entityDamager instanceof Player) && !(entityDamager instanceof Arrow)) {
+            return;
+        }
+
+        Player damager = null;
+
+        if (entityDamager instanceof Arrow){
+            Arrow arrow = (Arrow) entityDamager;
+            if (arrow.getShooter() instanceof Player){
+                damager = (Player) arrow.getShooter();
+            }
+        }
+
+        if (entityDamager instanceof Player){
+            damager = (Player) event.getDamager();
+        }
+
+        if (damager == null) return;
+
+
+        if (damager.isOp()) return;
 
         // Verify Teams
         String targetTeamName = TeamsBuilder.getPlayerTeam(target);
