@@ -4,6 +4,7 @@ config:
     #TabList: "/TabList/groups.yml"
   #separator: "########## UNICONS_MANAGEMENT_%LOCATION% ##########"
   friendlyFire: false
+  reloadCooldownInMinutes: 30
 groups:
   un:
     general:
