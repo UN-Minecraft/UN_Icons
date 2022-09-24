@@ -79,6 +79,9 @@ public final class UNIcons extends JavaPlugin {
 
         // Manage Commands
         this.commandRegister();
+
+        // Add Reload Task
+        Utilities.reloadTeams(this);
     }
 
     @Override
